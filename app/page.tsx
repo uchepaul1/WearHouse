@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { stripe } from "@/lib/stripe";
 import { Carousel } from "@/components/carousel";
 import CustomerAssurance from "@/components/customer-assurance";
