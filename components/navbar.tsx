@@ -14,12 +14,15 @@ import { Button } from "./ui/button";
 function useFocusTrap(active: boolean, ref: React.RefObject<HTMLDivElement>) {
   useEffect(() => {
     if (!active || !ref.current) return;
+    
+    const currentRef = ref.current; // FIXED: Capture ref.current in variable
+    
     const focusableSelectors = [
       'a[href]',
       'button:not([disabled])',
       '[tabindex]:not([tabindex="-1"])',
     ];
-    const focusableEls = ref.current.querySelectorAll(focusableSelectors.join(","));
+    const focusableEls = currentRef.querySelectorAll(focusableSelectors.join(","));
     if (focusableEls.length === 0) return;
 
     const firstEl = focusableEls[0] as HTMLElement;
@@ -39,15 +42,16 @@ function useFocusTrap(active: boolean, ref: React.RefObject<HTMLDivElement>) {
           }
         }
       } else if (e.key === "Escape") {
-        (ref.current as any)?.closeMobile?.();
+        (currentRef as any)?.closeMobile?.();
       }
     }
 
-    ref.current.addEventListener("keydown", handleKeyDown);
+    currentRef.addEventListener("keydown", handleKeyDown);
     firstEl.focus();
 
     return () => {
-      ref.current?.removeEventListener("keydown", handleKeyDown);
+      // FIXED: Use captured currentRef instead of ref.current
+      currentRef.removeEventListener("keydown", handleKeyDown);
     };
   }, [active, ref]);
 }

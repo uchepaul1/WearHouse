@@ -2,23 +2,14 @@ import { ProductDetail } from "../../../components/product-detail";
 import { stripe } from "../../../lib/stripe";
 import { Stripe } from "stripe";
 
-// CHANGE #1: Changed the type to handle async params
+// FIXED: Updated type to match Next.js 15 expectations
 type PageProps = {
-  params: Promise<{ id: string }> | { id: string }
+  params: Promise<{ id: string }>;
 };
 
-// CHANGE #2: Added a new function to handle the param retrieval
-async function getProductId(params: PageProps['params']) {
-  if (params instanceof Promise) {
-    const resolvedParams = await params;
-    return resolvedParams.id;
-  }
-  return params.id;
-}
-
 export default async function Page({ params }: PageProps) {
-  // CHANGE #3: Use the new function to get the ID
-  const productId = await getProductId(params);
+  // FIXED: Always await params since they're always a Promise in Next.js 15
+  const { id: productId } = await params;
   
   const product = await stripe.products.retrieve(productId, {
     expand: ["default_price"],
