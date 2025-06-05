@@ -83,6 +83,7 @@ export default function Hero() {
                       src={heroData.image}
                       alt={`${heroData.title} Image`}
                       fill
+                      style={{ objectFit: "cover" }}
                       priority={index === heroIndex}
                       className="object-cover scale-110 group-hover:scale-115 transition-transform duration-500"
                       sizes="(max-width: 640px) 230px, (max-width: 1024px) 320px, 400px"

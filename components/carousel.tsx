@@ -21,10 +21,11 @@ export function Carousel({ products }) {
                 <Image
                   src={product.images[0]}
                   alt={product.name}
-                  className="object-cover transition-transform duration-300 group-hover:scale-110"
+                  className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
                   fill
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   priority
+                  unoptimized // <-- disables Next.js image optimization for remote Stripe images
                 />
               ) : (
                 <div className="flex items-center justify-center h-full w-full bg-neutral-200">

@@ -38,9 +38,8 @@ export const ProductDetail = ({ product }: Props) => {
           <Image
             src={imageUrl}
             alt={product.name}
-            width={600}
-            height={384}
-            style={{ objectFit: "cover", borderRadius: "1rem", width: "100%", height: "384px" }}
+            className="object-cover w-full h-full rounded-xl"
+            fill
             unoptimized
             priority
             sizes="(max-width: 768px) 100vw, 50vw"
@@ -55,6 +54,7 @@ export const ProductDetail = ({ product }: Props) => {
           </div>
         )}
       </div>
+      {/* Rest of the component remains unchanged */}
       <div className="md:w-1/2 w-full flex flex-col gap-6">
         <h1 className="text-4xl font-extrabold mb-2 text-gray-900 tracking-tight">
           {product.name}

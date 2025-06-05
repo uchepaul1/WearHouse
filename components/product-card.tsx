@@ -23,12 +23,13 @@ export const ProductCard = ({ product }: Props) => {
             <Image
               src={product.images[0]}
               alt={product.name}
-              layout="fill"
-              objectFit="cover"
+              fill
+              style={{ objectFit: "cover" }}
               className="group-hover:scale-105 group-hover:opacity-90 transition-transform duration-300 rounded-t-2xl"
               placeholder="blur"
               blurDataURL="/placeholder.png"
               sizes="(max-width: 768px) 100vw, 33vw"
+              unoptimized // <--- disables Next.js image optimization for remote Stripe images
             />
           </div>
         ) : (

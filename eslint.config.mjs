@@ -10,7 +10,18 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...compat.extends(
+    "next/core-web-vitals"  // This already includes TypeScript support
+  ),
+  {
+    files: ["**/*.{js,jsx,ts,tsx}"],  // Specify which files to lint
+    languageOptions: {
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module"
+      }
+    }
+  }
 ];
 
 export default eslintConfig;
