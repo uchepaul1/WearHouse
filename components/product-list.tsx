@@ -1,4 +1,3 @@
-
 "use client";
 
 import Stripe from "stripe";
@@ -23,23 +22,34 @@ export const ProductList = ({ products }: Props) => {
   });
 
   return (
-    <div>
-      <div className="mb-6 flex justify-center">
+    <div className="w-full max-w-7xl mx-auto px-4 py-10">
+      <div className="mb-8 flex justify-center">
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search products..."
-          className="w-full max-w-md rounded border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full max-w-lg rounded-lg border border-gray-300 px-6 py-3 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-lg"
         />
       </div>
-      <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredProduct.map((product, key) => (
-          <li key={key}>
-            <ProductCard product={product} />
-          </li>
-        ))}
-      </ul>
+      {filteredProduct.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20">
+          <svg width={64} height={64} fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24" className="mb-3 text-indigo-300">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M9 9h.01M15 9h.01M8 13c1.333 1.333 4.667 1.333 6 0" />
+          </svg>
+          <h2 className="text-2xl font-bold text-gray-700 mb-2">No products found</h2>
+          <p className="text-gray-500">Try searching for something else!</p>
+        </div>
+      ) : (
+        <ul className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {filteredProduct.map((product) => (
+            <li key={product.id}>
+              <ProductCard product={product} />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

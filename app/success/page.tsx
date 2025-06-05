@@ -1,6 +1,6 @@
 "use client";
 
-import { useCartStore } from "@/store/cart-store";
+import { useCartStore } from "../../store/cart-store";
 import Link from "next/link";
 import { useEffect } from "react";
 

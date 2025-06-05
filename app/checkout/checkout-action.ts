@@ -1,7 +1,7 @@
 "use server";
 
-import { stripe } from "@/lib/stripe";
-import { CartItem } from "@/store/cart-store";
+import { stripe } from "../../lib/stripe";
+import { CartItem } from "../../store/cart-store";
 import { redirect } from "next/navigation";
 
 export const checkoutAction = async (formData: FormData): Promise<void> => {
