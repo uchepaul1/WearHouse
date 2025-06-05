@@ -54,7 +54,6 @@ function useFocusTrap(active: boolean, ref: React.RefObject<HTMLDivElement>) {
 
 export const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
-
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => setHydrated(true), []);
 
@@ -71,16 +70,18 @@ export const Navbar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // FIXED: Store ref.current in a variable inside the effect
   useEffect(() => {
     if (!mobileOpen) return;
+    
+    const currentRef = mobileMenuRef.current;
+    
     function handleClick(e: MouseEvent) {
-      if (
-        mobileMenuRef.current &&
-        !mobileMenuRef.current.contains(e.target as Node)
-      ) {
+      if (currentRef && !currentRef.contains(e.target as Node)) {
         setMobileOpen(false);
       }
     }
+    
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, [mobileOpen]);
@@ -214,8 +215,8 @@ function NavLink({
       className={`relative px-2.5 py-1 text-base font-medium transition-colors rounded
         ${active
           ? "text-blue-700 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-full after:bg-blue-700 after:rounded-full after:scale-x-100"
-          : "text-neutral-700 hover:text-blue-700 focus-visible:text-blue-700 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-full after:bg-blue-700 after:rounded-full after:scale-x-0 hover:after:scale-x-100 focus-visible:after:scale-x-100"}
-        after:transition-transform after:duration-200 after:origin-left`}
+          : "text-neutral-700 hover:text-blue-700 focus-visible:text-blue-700 after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-full after:bg-blue-700 after:rounded-full after:scale-x-0 hover:after:scale-x-100 focus-visible:after:scale-x-100"
+        } after:transition-transform after:duration-200 after:origin-left`}
       aria-current={active ? "page" : undefined}
     >
       {label}

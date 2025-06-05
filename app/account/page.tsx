@@ -62,7 +62,7 @@ export default function AccountPage() {
             </>
           ) : (
             <>
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <button
                 className="text-blue-700 underline"
                 onClick={() => setSignupMode(true)}

@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/ca
 import { useCartStore } from "../../store/cart-store";
 import { checkoutAction } from "./checkout-action";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
+import Image from "next/image"; // Add this import
 
 export default function CheckoutPage() {
   const { items, removeItem, addItem } = useCartStore();
@@ -42,11 +43,16 @@ export default function CheckoutPage() {
                 className="flex gap-4 border-b pb-4 items-center group hover:bg-blue-50 transition"
               >
                 {item.image && (
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-14 h-14 rounded-lg object-cover shadow-sm border"
-                  />
+                  <div className="relative w-14 h-14">
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      className="rounded-lg object-cover shadow-sm border"
+                      fill
+                      sizes="56px"
+                      unoptimized // Add this if the images are from an external source like Stripe
+                    />
+                  </div>
                 )}
                 <div className="flex flex-1 flex-col justify-between">
                   <div className="flex justify-between items-center">

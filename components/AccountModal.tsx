@@ -23,7 +23,13 @@ export function AccountModal({ open, onClose }: { open: boolean; onClose: () => 
   return (
     <div className="fixed inset-0 z-50 bg-black/30 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md relative">
-        <button className="absolute right-4 top-4 text-gray-500" onClick={onClose}>×</button>
+        <button 
+          className="absolute right-4 top-4 text-gray-500 hover:text-gray-700" 
+          onClick={onClose}
+          aria-label="Close modal"
+        >
+          ×
+        </button>
         <h2 className="text-2xl font-bold mb-4">
           {mode === "login" ? "Sign In" : "Sign Up"}
         </h2>
@@ -43,16 +49,16 @@ export function AccountModal({ open, onClose }: { open: boolean; onClose: () => 
             onChange={e => setPassword(e.target.value)}
             required
           />
-          {error && <div className="text-red-600">{error}</div>}
-          <button className="w-full bg-blue-600 text-white py-2 rounded" type="submit">
+          {error && <div className="text-red-600" role="alert">{error}</div>}
+          <button className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700" type="submit">
             {mode === "login" ? "Login" : "Sign Up"}
           </button>
         </form>
         <div className="mt-4 text-center">
           {mode === "login" ? (
-            <>Don't have an account? <button onClick={() => setMode("signup")} className="text-blue-600 underline">Sign Up</button></>
+            <>Don&apos;t have an account? <button onClick={() => setMode("signup")} className="text-blue-600 underline hover:text-blue-800">Sign Up</button></>
           ) : (
-            <>Already have an account? <button onClick={() => setMode("login")} className="text-blue-600 underline">Login</button></>
+            <>Already have an account? <button onClick={() => setMode("login")} className="text-blue-600 underline hover:text-blue-800">Login</button></>
           )}
         </div>
       </div>
