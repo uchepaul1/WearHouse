@@ -3,10 +3,13 @@ import { useAuth } from "../../components/AuthContext";
 import { useState } from "react";
 
 export default function AccountPage() {
-  const { authenticated, user, login, signup, logout, loading, error } = useAuth();
+  // FIXED: Removed 'error' from destructuring since it doesn't exist in AuthContext
+  const { authenticated, user, login, signup, logout, loading } = useAuth();
   const [signupMode, setSignupMode] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  // FIXED: Added local error state to handle authentication errors
+  const [error, setError] = useState<string | null>(null);
 
   if (loading) return <div className="mt-16 text-center">Loading...</div>;
 
@@ -17,10 +20,16 @@ export default function AccountPage() {
         <form
           onSubmit={async e => {
             e.preventDefault();
-            if (signupMode) {
-              await signup(username, password);
-            } else {
-              await login(username, password);
+            setError(null); // Clear previous errors
+            try {
+              if (signupMode) {
+                await signup(username, password);
+              } else {
+                await login(username, password);
+              }
+            } catch (err) {
+              // FIXED: Handle authentication errors locally
+              setError(err instanceof Error ? err.message : "Authentication failed");
             }
           }}
           className="space-y-4"
@@ -55,7 +64,10 @@ export default function AccountPage() {
               Already have an account?{" "}
               <button
                 className="text-blue-700 underline"
-                onClick={() => setSignupMode(false)}
+                onClick={() => {
+                  setSignupMode(false);
+                  setError(null); // Clear errors when switching modes
+                }}
               >
                 Login
               </button>
@@ -65,7 +77,10 @@ export default function AccountPage() {
               Don&apos;t have an account?{" "}
               <button
                 className="text-blue-700 underline"
-                onClick={() => setSignupMode(true)}
+                onClick={() => {
+                  setSignupMode(true);
+                  setError(null); // Clear errors when switching modes
+                }}
               >
                 Sign Up
               </button>

@@ -2,7 +2,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { formatPrice } from "lib/utils";
 
-export function Carousel({ products }) {
+// Define the Product type based on your Stripe product structure
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  images?: string[];
+  default_price: {
+    unit_amount: number;
+  };
+}
+
+// Define the component props type
+interface CarouselProps {
+  products: Product[];
+}
+
+export function Carousel({ products }: CarouselProps) {
   return (
     <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8">
       <h2 className="mb-8 text-3xl font-extrabold text-neutral-900 tracking-tight">
@@ -14,7 +30,7 @@ export function Carousel({ products }) {
             key={product.id}
             href={`/products/${product.id}`}
             aria-label={`View details for ${product.name}`}
-            className="group relative flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white p-5 shadow transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500"
+            className="group relative flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white p-5 shadow transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-blue-500"
           >
             <div className="relative aspect-square overflow-hidden rounded-xl bg-neutral-100 mb-4">
               {product.images && product.images[0] ? (

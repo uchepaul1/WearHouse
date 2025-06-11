@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../components/ui/ca
 import { useCartStore } from "../../store/cart-store";
 import { checkoutAction } from "./checkout-action";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
-import Image from "next/image"; // Add this import
+import Image from "next/image";
 
 export default function CheckoutPage() {
   const { items, removeItem, addItem } = useCartStore();
@@ -42,10 +42,11 @@ export default function CheckoutPage() {
                 key={item.id}
                 className="flex gap-4 border-b pb-4 items-center group hover:bg-blue-50 transition"
               >
-                {item.image && (
+                {/* FIXED: Added type assertion and proper checking for image property */}
+                {(item as any).image && (
                   <div className="relative w-14 h-14">
                     <Image
-                      src={item.image}
+                      src={(item as any).image}
                       alt={item.name}
                       className="rounded-lg object-cover shadow-sm border"
                       fill
