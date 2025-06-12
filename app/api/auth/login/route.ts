@@ -2,6 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+// Extend globalThis type to include FAKE_DB
+declare global {
+  var FAKE_DB: Record<string, { passwordHash: string }> | undefined;
+}
+
 const FAKE_DB: Record<string, { passwordHash: string }> = globalThis.FAKE_DB || (globalThis.FAKE_DB = {});
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret_dev_key";
 const JWT_EXPIRES_IN = "7d";
