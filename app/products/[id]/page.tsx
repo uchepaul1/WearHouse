@@ -8,7 +8,6 @@ type PageProps = {
 };
 
 export default async function Page({ params }: PageProps) {
-  // FIXED: Always await params since they're always a Promise in Next.js 15
   const { id: productId } = await params;
   
   const product = await stripe.products.retrieve(productId, {

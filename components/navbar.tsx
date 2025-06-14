@@ -74,7 +74,6 @@ export const Navbar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // FIXED: Store ref.current in a variable inside the effect
   useEffect(() => {
     if (!mobileOpen) return;
     

@@ -1,22 +1,9 @@
-// components/carousel.tsx
-
 import Image from "next/image";
 import Link from "next/link";
 import { formatPrice } from "lib/utils";
-import Stripe from "stripe"; // Keep this import for Stripe's types
-
-// --- THE FINAL FIX: Remove your custom 'Product' interface and use Stripe.Product directly ---
-// interface Product {
-//   id: string;
-//   name: string;
-//   description: string | null;
-//   images?: string[];
-//   default_price: Stripe.Price | null | undefined;
-// }
-
-// Define the component props type to directly use Stripe.Product
+import Stripe from "stripe"; 
 interface CarouselProps {
-  products: Stripe.Product[]; // <-- **THIS IS THE CRITICAL CHANGE**
+  products: Stripe.Product[]; 
 }
 
 export function Carousel({ products }: CarouselProps) {
@@ -27,20 +14,15 @@ export function Carousel({ products }: CarouselProps) {
       </h2>
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {products.map((product) => {
-          // Now 'product' is of type Stripe.Product.
-          // 'product.default_price' is of type 'string | Stripe.Price | null | undefined'.
-
-          // We need to ensure 'price' is actually a Stripe.Price object before accessing unit_amount.
-          // This type guard correctly handles string, null, and undefined cases.
           const price = product.default_price;
           const hasPriceData =
-            typeof price === 'object' && // Ensure it's an object (i.e., Stripe.Price)
-            price !== null &&          // Ensure it's not null
-            typeof price.unit_amount === 'number'; // Ensure unit_amount exists and is a number
+            typeof price === 'object' && 
+            price !== null &&          
+            typeof price.unit_amount === 'number';
 
           return (
             <Link
-              key={product.id} // product.id is always string
+              key={product.id}
               href={`/products/${product.id}`}
               aria-label={`View details for ${product.name}`}
               className="group relative flex flex-col overflow-hidden rounded-2xl border border-neutral-200 bg-white p-5 shadow transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-blue-500"
@@ -49,7 +31,7 @@ export function Carousel({ products }: CarouselProps) {
                 {product.images && product.images.length > 0 && typeof product.images[0] === 'string' ? (
                   <Image
                     src={product.images[0]}
-                    alt={product.name || 'Product Image'} // product.name is string
+                    alt={product.name || 'Product Image'} 
                     className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"

@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 export const checkoutAction = async (formData: FormData): Promise<void> => {
   const itemsJson = formData.get("items") as string;
   const items = JSON.parse(itemsJson);
+
   const line_items = items.map((item: CartItem) => ({
     price_data: {
       currency: "usd",
@@ -16,12 +17,21 @@ export const checkoutAction = async (formData: FormData): Promise<void> => {
     quantity: item.quantity,
   }));
 
+  const baseUrl = process.env.NODE_ENV === 'production'
+    ? process.env.URL
+    : 'http://localhost:3000';
+
+  if (!baseUrl) {
+    console.error("Base URL environment variable (process.env.URL) is not set.");
+    throw new Error("Missing base URL configuration for checkout.");
+  }
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items,
     mode: "payment",
-    success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/success`,
-    cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/checkout`,
+    success_url: `${baseUrl}/success`, 
+    cancel_url: `${baseUrl}/checkout`,  
   });
 
   redirect(session.url!);

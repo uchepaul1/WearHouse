@@ -3,12 +3,10 @@ import { useAuth } from "../../components/AuthContext";
 import { useState } from "react";
 
 export default function AccountPage() {
-  // FIXED: Removed 'error' from destructuring since it doesn't exist in AuthContext
   const { authenticated, user, login, signup, logout, loading } = useAuth();
   const [signupMode, setSignupMode] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // FIXED: Added local error state to handle authentication errors
   const [error, setError] = useState<string | null>(null);
 
   if (loading) return <div className="mt-16 text-center">Loading...</div>;
@@ -20,7 +18,7 @@ export default function AccountPage() {
         <form
           onSubmit={async e => {
             e.preventDefault();
-            setError(null); // Clear previous errors
+            setError(null); 
             try {
               if (signupMode) {
                 await signup(username, password);
@@ -28,7 +26,6 @@ export default function AccountPage() {
                 await login(username, password);
               }
             } catch (err) {
-              // FIXED: Handle authentication errors locally
               setError(err instanceof Error ? err.message : "Authentication failed");
             }
           }}
@@ -66,7 +63,7 @@ export default function AccountPage() {
                 className="text-blue-700 underline"
                 onClick={() => {
                   setSignupMode(false);
-                  setError(null); // Clear errors when switching modes
+                  setError(null); 
                 }}
               >
                 Login
@@ -79,7 +76,7 @@ export default function AccountPage() {
                 className="text-blue-700 underline"
                 onClick={() => {
                   setSignupMode(true);
-                  setError(null); // Clear errors when switching modes
+                  setError(null); 
                 }}
               >
                 Sign Up

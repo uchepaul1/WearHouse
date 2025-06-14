@@ -29,7 +29,7 @@ export const ProductCard = ({ product }: Props) => {
               placeholder="blur"
               blurDataURL="/placeholder.png"
               sizes="(max-width: 768px) 100vw, 33vw"
-              unoptimized // <--- disables Next.js image optimization for remote Stripe images
+              unoptimized 
             />
           </div>
         ) : (

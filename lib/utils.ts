@@ -1,8 +1,7 @@
-// lib/utils.ts
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-// Your existing formatPrice function
+
 export function formatPrice(amount: number | null, currency: string = 'USD'): string {
   if (amount === null) {
     return 'N/A';
@@ -15,9 +14,7 @@ export function formatPrice(amount: number | null, currency: string = 'USD'): st
   }).format(amount / 100);
 }
 
-// --- FIX START ---
-// Add the cn function here, as it needs to be exported from this file.
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-// --- FIX END ---

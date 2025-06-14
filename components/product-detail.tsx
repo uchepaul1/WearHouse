@@ -54,7 +54,6 @@ export const ProductDetail = ({ product }: Props) => {
           </div>
         )}
       </div>
-      {/* Rest of the component remains unchanged */}
       <div className="md:w-1/2 w-full flex flex-col gap-6">
         <h1 className="text-4xl font-extrabold mb-2 text-gray-900 tracking-tight">
           {product.name}
